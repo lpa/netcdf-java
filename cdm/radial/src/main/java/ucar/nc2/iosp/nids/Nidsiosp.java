@@ -1217,7 +1217,12 @@ public class Nidsiosp extends AbstractIOServiceProvider {
       int iscale = vinfo.code;
       float[] fdata = new float[npixel];
       for (int i = 0; i < npixel; i++) {
-        int ival = levels[pdata[i]];
+        byte pdataAti = pdata[i];
+        if (pdataAti > levels.length) {
+          logger.warn(" var " + vName + " : pdata[" + i + "] = " + pdataAti + " is too much, should not be greater than " + levels.length + ", is replaced by 0 resulting in NaN value");
+          pdataAti = 0;
+        }
+        int ival = levels[pdataAti];
         if (ival > -9997)
           fdata[i] = (float) ival / (float) iscale + (float) offset;
         else
