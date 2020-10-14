@@ -2451,7 +2451,13 @@ class Nidsheader {
       radial = 3;
       prod_elevation = pinfo.p5;
       prod_top = pinfo.p6;
-      ctilt = pname_lookup(pcode, 0);
+
+      // Layer Composite Reflectivity Average products 63, 64 have no AWIPS code
+      if (prod_type == Layer_Reflect_Avg) {
+        ctilt = "Layer Composite Reflectivity Avg";
+      } else {
+        ctilt = pname_lookup(pcode, 0);
+      }
       summary = ctilt + " is a raster image of composite reflectivity at range 124 nm";
       cmemo = "Layer Reflct " + prod_elevation + " - " + prod_top + cmode[pinfo.opmode];
       t1 = t1 * 4;
